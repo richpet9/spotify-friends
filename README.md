@@ -18,7 +18,7 @@ This is an application for building a playlist incorporating two Spotify users' 
 
 This app was made in React, using an Express back-end. It uses `node-sass-chokidar` to build CSS files from SASS, and Webpack bundles the JavaScript and CSS, using a Babel precompiler.
 
-##Dependencies
+## Dependencies
 
 - express: `^4.16.4`,
 - querystring: `^0.2.0`,
@@ -27,7 +27,7 @@ This app was made in React, using an Express back-end. It uses `node-sass-chokid
 - request: `^2.88.0`,
 - spotify-web-api-js: `^1.2.0`
 
-###Development Dependencies
+### Development Dependencies
 
 - @babel/core: `^7.4.3`,
 - @babel/preset-env: `^7.4.3`,
