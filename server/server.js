@@ -1,14 +1,16 @@
 const express = require('express');
 const request = require('request');
 const querystring = require('querystring');
+const { client } = require('./spotify');
+
 const app = express();
 
 const PORT = 8080;
 
 //Spotify API info
-const clientId = '04b61820a4dc41c78f46f0bd941b0dee';
-const clientSecret = 'ee3749f9947044a790b5a40182409622';
-const redirectURI = 'http://localhost:8080/callback/';
+const clientId = client.clientId;
+const clientSecret = client.clientSecret;
+const redirectURI = client.redirectURI;
 
 app.use(express.static('client/public'));
 

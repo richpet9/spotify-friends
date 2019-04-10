@@ -4,15 +4,17 @@ _An app for building playlists that both you AND your friend will love!_
 
 ## To run this app
 
-Clone this repo to any location you like, then run the following commands:
+Clone this repo to any location you like, then:
 
-- `npm install`
-- `npm run build`
-- `npm run start`
+1. Rename `server/spotify.example.js` to `server/spotify.js`
+2. Change the values in `spotify.js` to reflect the values on your Spotify API Dashboard
+3. Run `npm install`
+4. Run `npm run build`
+5. Run `npm run start`
 
 This will install dependencies, create the necessary CSS files from SASS, and call webpack to bundle everything.
 
-## About
+### About
 
 This is an application for building a playlist incorporating two Spotify users' music, using the [Spotify Web API](https://developer.spotify.com/documentation/web-api/).
 

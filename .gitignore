@@ -10,5 +10,6 @@
 .env.production.local
 
 # Production files to exclude
+spotify.js
 *.css
 /client/public/*.js
