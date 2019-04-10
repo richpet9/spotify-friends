@@ -1,0 +1,14 @@
+# Dependancies
+/node_modules
+
+# Misc
+.DS_STORE
+.vscode
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Production files to exclude
+*.css
+/client/public/*.js
