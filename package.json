@@ -8,7 +8,7 @@
     "watch": "webpack --mode development --watch",
     "watch-css": "node-sass-chokidar ./client/src -o ./client/src --watch --recursive",
     "start": "nodemon server/server.js",
-    "build": "webpack --mode production"
+    "build": "node-sass-chokidar ./client/src -o ./client/src && webpack --mode production"
   },
   "author": "",
   "license": "ISC",
