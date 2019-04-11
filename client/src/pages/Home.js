@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
-import LoggedIn from '../views/LoggedIn';
-import Login from '../views/Login';
 import SpotifyWebApi from 'spotify-web-api-js';
-import './Home.css';
+import Login from '../views/Login';
+import Dashboard from '../views/dashbaord/Dashboard';
 
 function Home(props) {
-  const [loggedIn, setLoggedIn] = useState(false); //Logged in state
-  const [username, setUsername] = useState(null); //Username state / temp
-  const [userData, setUserData] = useState(null); //Data of other user state / temp
-  const [otherUsername, setOtherUsername] = useState(null); //otherUsername state / temp
-  const [otherUserData, setOtherUserData] = useState(null); //Data of other user state / temp
+  const [userData, setUserData] = useState(null); //Data of other user state
+  const [otherUserData, setOtherUserData] = useState(null); //Data of other user state
 
   //Spotify API
   const spotify = new SpotifyWebApi();
 
-  const refreshToken = localStorage.getItem('refresh_token'); //Refresh token on localstorage
+  const refreshToken = localStorage.getItem('refresh_token'); //Refresh token from localstorage
 
+  //If we don't have any userdata, i.e. they are not logged in
   if (!userData) {
+    //We are not logged in, and there is an access token param
     if (props.access) {
       //We were given an access token
       spotify.setAccessToken(props.access);
@@ -40,32 +38,38 @@ function Home(props) {
         }
       );
     } else if (refreshToken) {
-      //If not logged in, but we have a refresh token
+      //We are not logged in, but we have a refresh token
       window.location = '/refresh-token?token=' + refreshToken;
     }
   }
 
-  const handleUsernameChange = el => {
-    setOtherUsername(el.target.value);
-  };
-
-  const handleContinue = () => {
+  const getUserData = name => {
     //Create the data object for otherUser
     let otherUser = {};
-    spotify.getUser(otherUsername).then(data => {
+    spotify.getUser(name).then(data => {
       otherUser = data;
-      spotify.getUserPlaylists(otherUsername).then(data => {
+      spotify.getUserPlaylists(name).then(data => {
         otherUser.playlists = data.items;
         setOtherUserData(otherUser);
       });
     });
   };
 
+  const restart = () => {
+    setOtherUserData(null);
+  };
+
+  //DEBUG: For testing dashboard quickly
+  // if (userData) {
+  //   getUserData('cjyopp98');
+  // }
+  //////////////////////////////
+
   return (
     <div className="container">
-      <h1>Spotify Friends</h1>
+      <h1 id="wordmark">Spotifriends</h1>
       {!userData && <Login />}
-      {userData && <LoggedIn userData={userData} otherUserData={otherUserData} handleUsernameChange={handleUsernameChange} handleContinue={handleContinue} />}
+      {userData && <Dashboard userData={userData} otherUserData={otherUserData} getUserData={getUserData} restart={restart} />}
     </div>
   );
 }

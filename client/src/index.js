@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './src/pages/Home';
+import Home from './pages/Home';
+
+//Stylesheet
+import './styles.css'; //Yeah, it's all in one sheet.
 
 function getHashParams() {
   var hashParams = {};
