@@ -27,7 +27,7 @@ function PlaylistList(props) {
 
   return (
     <div>
-      <p>Select the playlists which seem interesting</p>
+      <p>Which of these playlists seem interesting?</p>
       <ul id="playlist-container">
         {props.playlistData.map(playlist => {
           return (

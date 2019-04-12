@@ -38,7 +38,7 @@ h6 {
 }
 
 #app {
-  padding: 60px 10%;
+  padding: 60px 0;
   text-align: center;
 }
 
@@ -48,11 +48,13 @@ h6 {
 
 #login-container {
   margin-top: 64px;
+  padding: 0 10%;
 }
 
 #dashboard-container {
   margin-top: 24px;
   font-size: 18px;
+  position: relative;
 
   * {
     margin-bottom: 16px;
@@ -81,6 +83,7 @@ h6 {
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
+    padding: 0 10%;
 
     .playlist-item {
       display: block;
@@ -131,4 +134,33 @@ h6 {
 
 .button.small {
   font-size: 20px;
+}
+
+.tooltip-container {
+  .tooltip-popup {
+    display: inline-block;
+    position: absolute;
+    width: 600px;
+    padding: 8px;
+    text-align: left;
+    font-size: 14px;
+    background: $white;
+    color: $dark;
+    opacity: 0;
+    bottom: -72px;
+    left: calc(50% - 300px);
+    border-radius: 5px;
+    z-index: 0;
+  }
+
+  .tooltip-text {
+    position: relative;
+    text-decoration: underline;
+    cursor: help;
+    z-index: 10;
+  }
+
+  .tooltip-text:hover ~ .tooltip-popup {
+    opacity: 1;
+  }
 }

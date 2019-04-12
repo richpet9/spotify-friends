@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 import Login from '../views/Login';
-import Dashboard from '../views/dashbaord/Dashboard';
+import Dashboard from '../views/Dashboard';
 
 function Home(props) {
   const [userData, setUserData] = useState(null); //Data of other user state
@@ -22,6 +22,7 @@ function Home(props) {
         data => {
           //We are logged in
           let me = data;
+          //Doing some ugly nesting here b/c checking for errors below
           spotify.getUserPlaylists(data.id).then(data => {
             me.playlists = data.items;
             setUserData(me);
@@ -46,24 +47,24 @@ function Home(props) {
   const getUserData = name => {
     //Create the data object for otherUser
     let otherUser = {};
-    spotify.getUser(name).then(data => {
-      otherUser = data;
-      spotify.getUserPlaylists(name).then(data => {
+    spotify
+      .getUser(name)
+      .then(data => {
+        otherUser = data;
+        return data.id;
+      })
+      .then(name => {
+        return spotify.getUserPlaylists(name);
+      })
+      .then(data => {
         otherUser.playlists = data.items;
         setOtherUserData(otherUser);
       });
-    });
   };
 
   const restart = () => {
     setOtherUserData(null);
   };
-
-  //DEBUG: For testing dashboard quickly
-  // if (userData) {
-  //   getUserData('cjyopp98');
-  // }
-  //////////////////////////////
 
   return (
     <div className="container">
@@ -75,3 +76,27 @@ function Home(props) {
 }
 
 export default Home;
+
+/*
+Algorithm Plan:
+1. Check each playlist.
+1a. Add any song the user has saved.
+1b. Add any song from an artist the user listens to.
+
+2. Check the current size of the song list.
+2a. If we need more, add songs from the user's library with matching genres.
+
+3. Check the current size of the song list.
+3a. If we need more, check each playlist.
+3b. Add songs from the selected playlists with matching genres.
+
+4. Check the current size of the song list.
+4a. If we need more, check each playlist.
+4b. Add songs which are popular.
+
+5. Check the current size of the song list.
+5a. If we need more, add songs from the user's library which are popular.
+
+Ideal song list length: 30 tracks.
+
+*/

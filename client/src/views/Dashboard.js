@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import SelectUser from './SelectUser';
-import PlaylistList from './PlaylistList';
-import GenreList from './GenreList';
+import SelectUser from './dashboard/SelectUser';
+import PlaylistList from './dashboard/PlaylistList';
+import GenreList from './dashboard/GenreList';
 
 function Dashboard(props) {
   const [selectedPlaylists, setPlaylists] = useState(null);
   const [selectedGenres, setGenres] = useState(null);
 
-  const { otherUserData } = props;
+  const { userData, otherUserData } = props;
 
   const handleGoBack = () => {
     if (!selectedPlaylists) {
@@ -37,9 +37,10 @@ function Dashboard(props) {
 
   return (
     <div id="dashboard-container">
-      {!otherUserData && !selectedPlaylists && !selectedGenres && <SelectUser continue={handleContinue} />}
+      {!otherUserData && <SelectUser continue={handleContinue} />}
       {otherUserData && !selectedPlaylists && <PlaylistList continue={handleContinue} goBack={handleGoBack} playlistData={otherUserData.playlists} />}
       {selectedPlaylists && !selectedGenres && <GenreList continue={handleContinue} goBack={handleGoBack} />}
+      {selectedGenres && <h1>All Done!</h1>}
     </div>
   );
 }

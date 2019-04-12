@@ -2,10 +2,10 @@ import React from 'react';
 import Button from '../../common/Button';
 
 function GenreList(props) {
-  const allGenres = ['Pop', 'Hip Hop', 'Country', 'Electronic', 'Jazz'];
+  const allGenres = ['Pop', 'Hip Hop', 'R&B', 'Indie', 'Trap', 'Country', 'Electronic', 'Jazz'];
 
   const handleContinue = () => {
-    props.handleContinue;
+    props.continue();
   };
 
   return (
