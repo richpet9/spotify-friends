@@ -94,6 +94,7 @@ h6 {
       border: 6px solid transparent;
       border-radius: 5px;
       cursor: pointer;
+      transition: all 150ms ease-in;
     }
 
     .playlist-item.select {

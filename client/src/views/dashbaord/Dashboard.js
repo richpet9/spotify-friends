@@ -1,55 +1,45 @@
 import React, { useState } from 'react';
-import Button from '../../common/Button';
+import SelectUser from './SelectUser';
 import PlaylistList from './PlaylistList';
+import GenreList from './GenreList';
 
 function Dashboard(props) {
-  const [otherUsername, setOtherUsername] = useState(null);
-  const { userData, otherUserData } = props;
+  const [selectedPlaylists, setPlaylists] = useState(null);
+  const [selectedGenres, setGenres] = useState(null);
 
-  const handleLogout = () => {
-    localStorage.removeItem('refresh_token');
-    window.location = '/';
-  };
+  const { otherUserData } = props;
 
-  const handleUsernameChange = el => {
-    setOtherUsername(el.target.value);
-  };
-
-  const handleContinue = () => {
-    if (otherUsername === null) {
-      //Show error
+  const handleGoBack = () => {
+    if (!selectedPlaylists) {
+      //If we dont have playlists yet, restart to Home
+      props.restart();
+    } else if (!selectedGenres) {
+      //If we don't have genres yet, go back to playlists
+      setPlaylists(null);
     } else {
-      props.getUserData(otherUsername);
+      //If we have genres, go back to genres
+      setGenres(null);
     }
   };
 
-  const handleGoBack = () => {
-    if (true) {
-      setOtherUsername(null);
-      props.restart();
+  const handleContinue = data => {
+    if (!otherUserData) {
+      //If we dont have other user data yet, continue by setting that data
+      props.getUserData(data);
+    } else if (!selectedPlaylists) {
+      //If we dont have playlists selected, continue by setting that
+      setPlaylists(data);
+    } else if (!selectedGenres) {
+      //If we dont have genres set, continue by setting that.
+      setGenres(data);
     }
   };
 
   return (
     <div id="dashboard-container">
-      {!otherUserData && (
-        <div>
-          <p>First, please enter their Spotify username</p>
-          <input type="text" autoFocus onChange={handleUsernameChange.bind(this)} name="spotify-username" />
-          <br />
-          <Button small value="Logout" onClick={handleLogout} />
-          <Button small value="Continue" onClick={handleContinue} />
-        </div>
-      )}
-      {otherUserData && (
-        <div>
-          <p>Select the playlists which seem interesting</p>
-
-          <PlaylistList playlistData={otherUserData.playlists} />
-          <Button small value="Go back" onClick={handleGoBack} />
-          <Button small value="Continue" />
-        </div>
-      )}
+      {!otherUserData && !selectedPlaylists && !selectedGenres && <SelectUser continue={handleContinue} />}
+      {otherUserData && !selectedPlaylists && <PlaylistList continue={handleContinue} goBack={handleGoBack} playlistData={otherUserData.playlists} />}
+      {selectedPlaylists && !selectedGenres && <GenreList continue={handleContinue} goBack={handleGoBack} />}
     </div>
   );
 }
